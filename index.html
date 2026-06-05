@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Hub - Unique Design</title>
+    
+    <!-- Telegram Mini App Script -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f0f1a;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Gradient Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff);
+            opacity: 0.15;
+            filter: blur(100px);
+            animation: gradientMove 8s ease infinite;
+            z-index: -1;
+        }
+        
+        @keyframes gradientMove {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Glass Effect */
+        .header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Button Grid */
+        .button-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        /* Unique Button Style */
+        .pro-btn {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .pro-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .pro-btn:hover::before {
+            left: 100%;
+        }
+        
+        .pro-btn:hover {
+            transform: translateY(-3px);
+            border-color: #8338ec;
+            box-shadow: 0 10px 30px rgba(131, 56, 236, 0.4);
+        }
+        
+        .pro-btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .btn-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .btn-text {
+            text-align: left;
+        }
+        
+        .btn-text h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+        
+        .btn-text span {
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .btn-arrow {
+            font-size: 20px;
+            color: #8338ec;
+            transition: transform 0.3s ease;
+        }
+        
+        .pro-btn:hover .btn-arrow {
+            transform: translateX(5px);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .header h1 { font-size: 24px; }
+            .pro-btn { padding: 16px; }
+            .btn-icon { width: 40px; height: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Pro Hub</h1>
+            <p>Select Your Option Below</p>
+        </div>
+        
+        <!-- 5 Buttons -->
+        <div class="button-grid">
+            
+            <!-- Button 1 -->
+            <div class="pro-btn" onclick="handleClick(1)">
+                <div class="btn-content">
+                    <div class="btn-icon">1</div>
+                    <div class="btn-text">
+                        <h3>Button 1</h3>
+                        <span>Click to proceed</span>
+                    </div>
+                </div>
+                <div class="btn-arrow">→</div>
+            </div>
+            
+            <!-- Button 2 -->
+            <div class="pro-btn" onclick="handleClick(2)">
+                <div class="btn-content">
+                    <div class="btn-icon">2</div>
+                    <div class="btn-text">
+                        <h3>Button 2</h3>
+                        <span>Click to proceed</span>
+                    </div>
+                <div class="btn-arrow">→</div>
+            </div>
+            
+            <!-- Button 3 -->
+            <div class="pro-btn" onclick="handleClick(3)">
+                <div class="btn-content">
+                    <div class="btn-icon">3</div>
+                    <div class="btn-text">
+                        <h3>Button 3</h3>
+                        <span>Click to proceed</span>
+                    </div>
+                <div class="btn-arrow">→</div>
+            </div>
+            
+            <!-- Button 4 -->
+            <div class="pro-btn" onclick="handleClick(4)">
+                <div class="btn-content">
+                    <div class="btn-icon">4</div>
+                    <div class="btn-text">
+                        <h3>Button 4</h3>
+                        <span>Click to proceed</span>
+                    </div>
+                </div>
+                <div class="btn-arrow">→</div>
+            </div>
+            
+            <!-- Button 5 -->
+            <div class="pro-btn" onclick="handleClick(5)">
+                <div class="btn-content">
+                    <div class="btn-icon">5</div>
+                    <div class="btn-text">
+                        <h3>Button 5</h3>
+                        <span>Click to proceed</span>
+                    </div>
+                <div class="btn-arrow">→</div>
+            </div>
+            
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            © 2026 Pro Hub. All Rights Reserved.
+        </div>
+    </div>
+    
+    <script>
+        // Telegram Mini App Ready
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // Full screen
+        tg.ready();
+        
+        // Button Click Handler - Yaha Monetag Code Lagana
+        function handleClick(btnNumber) {
+            // Monetag Interstitial Code Yaha Paste Karna
+            // Example: show_9712345().then(() => {
+            
+            alert('Button ' + btnNumber + ' Clicked! Monetag code yaha lagana');
+            
+            // Baad me yaha redirect karna: window.location.href = 'your_link';
+            
+            // });
+        }
+        
+        // Telegram User Data - CPM Badhane Ke Liye
+        if (tg.initDataUnsafe.user) {
+            console.log('User:', tg.initDataUnsafe.user.id);
+        }
+    </script>
+    
+    <!-- Monetag Popunder Code Yaha Paste Karna -->
+    <!-- <script src='//your-monetag-popunder.js'></script> -->
+    
+</body>
+</html>
