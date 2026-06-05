@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pro Hub</title>
     
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -36,12 +35,17 @@
         
         .container { max-width: 500px; margin: 0 auto; padding: 20px; }
         
+        .header-wrap {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
         .header {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px; padding: 25px;
-            text-align: center; margin-bottom: 30px;
+            text-align: center;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
@@ -53,6 +57,33 @@
         }
         
         .header p { color: #aaa; font-size: 14px; }
+        
+        .score-btn {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            border-radius: 12px;
+            padding: 10px 16px;
+            box-shadow: 0 5px 20px rgba(255, 0, 110, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 10;
+            text-decoration: none;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .score-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 0, 110, 0.7);
+        }
+        
+        .score-btn:active {
+            transform: scale(0.95);
+        }
+        
         .button-grid { display: grid; gap: 15px; }
         
         .pro-btn {
@@ -96,13 +127,22 @@
         .btn-arrow { font-size: 20px; color: #8338ec; transition: transform 0.3s ease; }
         .pro-btn:hover .btn-arrow { transform: translateX(5px); }
         .footer { text-align: center; margin-top: 40px; padding: 20px; color: #666; font-size: 12px; }
+        
+        @media (max-width: 480px) {
+            .score-btn { top: -8px; right: -8px; padding: 8px 14px; font-size: 13px; }
+            .header h1 { font-size: 24px; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Pro Hub</h1>
-            <p>Select Your Option Below</p>
+        <div class="header-wrap">
+            <div class="header">
+                <h1>Pro Hub</h1>
+                <p>Select Your Option Below</p>
+            </div>
+            
+            <a href="score.html" class="score-btn">Score</a>
         </div>
         
         <div class="button-grid">
@@ -111,7 +151,7 @@
                 <div class="btn-content">
                     <div class="btn-icon">1</div>
                     <div class="btn-text">
-                        <h3>Button 1</h3>
+                        <h3>Play 1</h3>
                         <span>Click to open</span>
                     </div>
                 </div>
@@ -122,7 +162,7 @@
                 <div class="btn-content">
                     <div class="btn-icon">2</div>
                     <div class="btn-text">
-                        <h3>Button 2</h3>
+                        <h3>Play 2</h3>
                         <span>Click to open</span>
                     </div>
                 </div>
@@ -133,7 +173,7 @@
                 <div class="btn-content">
                     <div class="btn-icon">3</div>
                     <div class="btn-text">
-                        <h3>Button 3</h3>
+                        <h3>Play 3</h3>
                         <span>Click to open</span>
                     </div>
                 </div>
@@ -144,7 +184,7 @@
                 <div class="btn-content">
                     <div class="btn-icon">4</div>
                     <div class="btn-text">
-                        <h3>Button 4</h3>
+                        <h3>Play 4</h3>
                         <span>Click to open</span>
                     </div>
                 </div>
@@ -155,7 +195,7 @@
                 <div class="btn-content">
                     <div class="btn-icon">5</div>
                     <div class="btn-text">
-                        <h3>Button 5</h3>
+                        <h3>Play 5</h3>
                         <span>Click to open</span>
                     </div>
                 </div>
@@ -166,11 +206,5 @@
         
         <div class="footer">© 2026 Pro Hub. All Rights Reserved.</div>
     </div>
-    
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
-    </script>
 </body>
 </html>
