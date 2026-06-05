@@ -36,12 +36,18 @@
         
         .container { max-width: 500px; margin: 0 auto; padding: 20px; }
         
+        /* Header + Score Wrapper */
+        .header-wrap {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
         .header {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px; padding: 25px;
-            text-align: center; margin-bottom: 30px;
+            text-align: center;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
@@ -53,6 +59,36 @@
         }
         
         .header p { color: #aaa; font-size: 14px; }
+        
+        /* Score Box - Right Corner */
+        .score-box {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            border-radius: 15px;
+            padding: 12px 18px;
+            box-shadow: 0 5px 20px rgba(255, 0, 110, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 10;
+        }
+        
+        .score-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .score-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            margin-top: 2px;
+        }
+        
         .button-grid { display: grid; gap: 15px; }
         
         .pro-btn {
@@ -95,18 +131,31 @@
         .btn-arrow { font-size: 20px; color: #8338ec; transition: transform 0.3s ease; }
         .pro-btn:hover .btn-arrow { transform: translateX(5px); }
         .footer { text-align: center; margin-top: 40px; padding: 20px; color: #666; font-size: 12px; }
+        
+        @media (max-width: 480px) {
+            .score-box { top: -8px; right: -8px; padding: 10px 15px; }
+            .score-value { font-size: 18px; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Pro Hub</h1>
-            <p>Select Your Option Below</p>
+        <!-- Header + Score -->
+        <div class="header-wrap">
+            <div class="header">
+                <h1>Pro Hub</h1>
+                <p>Select Your Option Below</p>
+            </div>
+            
+            <!-- Score Box Right Corner -->
+            <div class="score-box">
+                <div class="score-label">Score</div>
+                <div class="score-value" id="userScore">0</div>
+            </div>
         </div>
         
         <div class="button-grid">
             
-            <!-- Button 1 - FIXED -->
             <div class="pro-btn" onclick="handleClick(1)">
                 <div class="btn-content">
                     <div class="btn-icon">1</div>
@@ -118,7 +167,6 @@
                 <div class="btn-arrow">→</div>
             </div>
             
-            <!-- Button 2 - FIXED -->
             <div class="pro-btn" onclick="handleClick(2)">
                 <div class="btn-content">
                     <div class="btn-icon">2</div>
@@ -130,7 +178,6 @@
                 <div class="btn-arrow">→</div>
             </div>
             
-            <!-- Button 3 - FIXED -->
             <div class="pro-btn" onclick="handleClick(3)">
                 <div class="btn-content">
                     <div class="btn-icon">3</div>
@@ -142,7 +189,6 @@
                 <div class="btn-arrow">→</div>
             </div>
             
-            <!-- Button 4 - FIXED -->
             <div class="pro-btn" onclick="handleClick(4)">
                 <div class="btn-content">
                     <div class="btn-icon">4</div>
@@ -154,7 +200,6 @@
                 <div class="btn-arrow">→</div>
             </div>
             
-            <!-- Button 5 - FIXED -->
             <div class="pro-btn" onclick="handleClick(5)">
                 <div class="btn-content">
                     <div class="btn-icon">5</div>
@@ -176,8 +221,31 @@
         tg.expand();
         tg.ready();
         
+        // Score System
+        let score = 0;
+        const scoreElement = document.getElementById('userScore');
+        
+        function updateScore(points) {
+            score += points;
+            scoreElement.textContent = score;
+            
+            // Telegram me data save karne ke liye
+            tg.CloudStorage.setItem('userScore', score.toString());
+        }
+        
+        // Load saved score
+        tg.CloudStorage.getItem('userScore', (err, value) => {
+            if (value) {
+                score = parseInt(value);
+                scoreElement.textContent = score;
+            }
+        });
+        
         function handleClick(btnNumber) {
-            alert('Button ' + btnNumber + ' Clicked!');
+            // Har click pe 10 score badhega
+            updateScore(10);
+            
+            alert('Button ' + btnNumber + ' Clicked! +10 Score');
             // Yaha Monetag code lagana
         }
     </script>
