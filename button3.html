@@ -1,1 +1,41 @@
-3i
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loading...</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding-top: 50px; }
+        .msg { font-size: 24px; color: green; }
+        .error { font-size: 24px; color: red; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="message">
+        <h2>Cars page pe le ja rahe hain...</h2>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        const messageDiv = document.getElementById('message');
+
+        // Step 1: Check karo user wapas aaya hai ya naya aaya hai
+        if (status === 'success') {
+            messageDiv.innerHTML = '<h2 class="msg">✅ Verify ho gaya! Aap 22 second cars page pe ruke.</h2><p>Ab aap aage badh sakte hain.</p>';
+        } else if (status === 'failed') {
+            messageDiv.innerHTML = '<h2 class="error">❌ Verify nahi hua! Aap 22 second nahi ruke.</h2><p>Kripya dobara try karein.</p><button onclick="goToCars()">Dobara Try Karein</button>';
+        } else {
+            // Naya user hai, to cars page pe bhejo
+            setTimeout(goToCars, 1000);
+        }
+
+        function goToCars() {
+            // YAHAN APNA button3.html KA SAHI URL DAALNA
+            const returnUrl = "https://srsmhospitalc-collab.github.io/SFAmaster/button3.html";
+            const startTime = Date.now(); 
+            // cars page pe bhejo return_url + time + start time ke saath
+            window.location.href = "https://srsmhospitalc-collab.github.io/cars/?return_url=" + encodeURIComponent(returnUrl) + "&time=22&start=" + startTime;
+        }
+    </script>
+</body>
+</html>
