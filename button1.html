@@ -1,1 +1,176 @@
-hi
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Unlock Karo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: slideUp 0.5s ease;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .steps {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        .step {
+            margin: 12px 0;
+            color: #555;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .step-num {
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #msg {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 16px;
+            min-height: 24px;
+        }
+        .success {
+            color: #4caf50;
+            animation: pop 0.3s ease;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .waiting { color: #ff9800; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">🎁</div>
+        <h2>Reward Unlock Karo</h2>
+        <p style="color:#666; margin-bottom:10px;">Sirf 22 second ka task</p>
+        
+        <div class="steps">
+            <div class="step">
+                <span class="step-num">1</span>
+                <span>Neeche wale button pe click karo</span>
+            </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                <span>Dusri site pe 22 second ruko</span>
+            </div>
+            <div class="step">
+                <span class="step-num">3</span>
+                <span>Auto wapas aa jaoge & reward milega</span>
+            </div>
+        </div>
+        
+        <button class="btn" onclick="startTask()" id="taskBtn">
+            🚀 Task Shuru Karo
+        </button>
+        
+        <p id="msg"></p>
+    </div>
+
+<script>
+const RETURN_URL = window.location.href; // Ye page ka URL
+const TARGET_URL = 'https://srsmhospitalc-collab.github.io/bikes/';
+
+function startTask(){
+    localStorage.setItem('taskReturnUrl', RETURN_URL);
+    localStorage.setItem('taskStartTime', Date.now());
+    localStorage.removeItem('taskComplete');
+    
+    document.getElementById('msg').innerHTML = '⏳ Dusri site khul rahi hai...';
+    document.getElementById('msg').className = 'waiting';
+    document.getElementById('taskBtn').disabled = true;
+    document.getElementById('taskBtn').innerText = 'Task Chal Raha Hai...';
+    
+    // Same tab me bhejo taki auto wapas aa sake
+    window.location.href = TARGET_URL;
+}
+
+// Page load pe check karo wapas aaye hain verify ke sath ya nahi
+window.onload = function(){
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.get('verified') === 'yes'){
+        document.getElementById('msg').innerHTML = '✅ Task Complete! Reward Unlock Ho Gaya 🎉';
+        document.getElementById('msg').className = 'success';
+        document.getElementById('taskBtn').style.display = 'none';
+        
+        // Yaha tu PDF download ka button ya link daal de
+        setTimeout(() => {
+            document.getElementById('msg').innerHTML += '<br><br><a href="#" style="color:#667eea;text-decoration:underline;">📥 PDF Download Karo</a>';
+        }, 1000);
+    }
+}
+</script>
+</body>
+</html>
