@@ -1,1 +1,128 @@
-0-99
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Score</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: Arial; 
+            background: #f0f2f5; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { text-align: center; color: #1a73e8; }
+        .total-score {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .total-score h2 { margin: 0; font-size: 18px; }
+        .total-score .coins { font-size: 48px; font-weight: bold; margin: 10px 0; }
+        .button-list { margin-top: 20px; }
+        .button-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #1a73e8;
+        }
+        .button-name { font-weight: bold; color: #333; }
+        .button-coins { 
+            background: #ffd700; 
+            color: #333; 
+            padding: 5px 15px; 
+            border-radius: 20px; 
+            font-weight: bold; 
+        }
+        .reset-btn {
+            width: 100%;
+            padding: 12px;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏆 My Total Score</h1>
+        
+        <div class="total-score">
+            <h2>TOTAL COINS</h2>
+            <div class="coins" id="totalCoins">0</div>
+            <p>Sabhi ads dekh kar kamaye gaye coins</p>
+        </div>
+
+        <div class="button-list" id="buttonList">
+            <!-- Yahan JS se list aayegi -->
+        </div>
+
+        <button class="reset-btn" onclick="resetAllCoins()">Sab Coins Reset Karein</button>
+    </div>
+
+    <script>
+        const buttons = [
+            { name: 'Button 1', key: 'button1_coins' },
+            { name: 'Button 2', key: 'button2_coins' },
+            { name: 'Button 3', key: 'button3_coins' },
+            { name: 'Button 4', key: 'button4_coins' },
+            { name: 'Button 5', key: 'button5_coins' },
+            { name: 'Button 6', key: 'button6_coins' },
+            { name: 'Button 7', key: 'button7_coins' },
+            { name: 'Button 8', key: 'button8_coins' },
+            { name: 'Button 9', key: 'button9_coins' },
+            { name: 'Button 10', key: 'button10_coins' }
+        ];
+
+        function loadScores() {
+            let total = 0;
+            let html = '';
+
+            buttons.forEach(btn => {
+                let coins = parseInt(localStorage.getItem(btn.key)) || 0;
+                total += coins;
+                
+                html += `
+                    <div class="button-item">
+                        <span class="button-name">${btn.name}</span>
+                        <span class="button-coins">🪙 ${coins}</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('totalCoins').textContent = total;
+            document.getElementById('buttonList').innerHTML = html;
+        }
+
+        function resetAllCoins() {
+            if (confirm('Kya sach me sab coins reset karna hai?')) {
+                buttons.forEach(btn => {
+                    localStorage.removeItem(btn.key);
+                });
+                loadScores();
+            }
+        }
+
+        // Page load hote hi score dikhao
+        loadScores();
+    </script>
+</body>
+</html>
