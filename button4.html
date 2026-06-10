@@ -1,49 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Loading...</title>
-    <style>
-        body { font-family: Arial; text-align: center; padding-top: 50px; }
-        .msg { font-size: 24px; color: green; }
-        .error { font-size: 24px; color: red; }
-        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-    </style>
-</head>
-<body>
-    <div id="message">
-        <h2>Ad page pe le ja rahe hain...</h2>
-    </div>
+<!-- Timer + Auto Scroll Box -->
+<div id="timer-box" style="position:fixed; top:10px; right:10px; background:#388e3c; color:white; padding:12px 20px; border-radius:8px; font-size:16px; font-weight:bold; z-index:9999; text-align:center;">
+    <div>Screen ko dheere dheere scroll kare</div>
+    <div>⏱️ Rukiye: <span id="countdown">22</span>s</div>
+</div>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get('status');
-        const messageDiv = document.getElementById('message');
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const returnUrl = urlParams.get('return_url');
+    const startTime = parseInt(urlParams.get('start'));
+    let timeLeft = parseInt(urlParams.get('time')) || 22;
 
-        if (status === 'success') {
-            // Step 1: 2 Coin add karo localStorage me
-            let coins = parseInt(localStorage.getItem('button_coins')) || 0;
-            localStorage.setItem('button_coins', coins + 2);
+    const countdownElement = document.getElementById('countdown');
+    const timerBox = document.getElementById('timer-box');
+    
+    if (returnUrl && startTime) {
+        // Auto Scroll
+        let scrollPosition = 0;
+        const autoScroll = setInterval(function() {
+            if (window.innerHeight + window.scrollY < document.body.offsetHeight) {
+                scrollPosition += 1;
+                window.scrollTo(0, scrollPosition);
+            }
+        }, 100);
+
+        // Timer
+        const timer = setInterval(function() {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
             
-            // Step 2: User ko message dikhao
-            messageDiv.innerHTML = '<h2 class="msg">✅ Verify ho gaya! +2 Coins mile.</h2><p>Index page pe le ja rahe hain...</p>';
-            
-            // Step 3: 2 second baad index.html pe bhej do
-            setTimeout(function() {
-                window.location.href = "https://srsmhospitalc-collab.github.io/SFAmaster/index.html";
-            }, 2000);
-
-        } else if (status === 'failed') {
-            messageDiv.innerHTML = '<h2 class="error">❌ Verify nahi hua! Aap 22 second nahi ruke.</h2><button onclick="goToAd()">Dobara Try Karein</button>';
-        } else {
-            setTimeout(goToAd, 1000);
-        }
-
-        function goToAd() {
-            const returnUrl = "https://srsmhospitalc-collab.github.io/SFAmaster/button.html";
-            const startTime = Date.now();
-            // YAHAN AD PAGE KA URL DAAL - cycle use kar raha hun
-            window.location.href = "https://srsmhospitalc-collab.github.io/cycle/?return_url=" + encodeURIComponent(returnUrl) + "&time=22&start=" + startTime;
-        }
-    </script>
-</body>
-</html>
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                clearInterval(autoScroll);
+                
+                const timeSpent = (Date.now() - startTime) / 1000;
+                if (timeSpent >= 21) {
+                    window.location.href = decodeURIComponent(returnUrl) + "?status=success";
+                } else {
+                    window.location.href = decodeURIComponent(returnUrl) + "?status=failed";
+                }
+            }
+        }, 1000);
+    } else {
+        timerBox.style.display = 'none';
+    }
+</script>
