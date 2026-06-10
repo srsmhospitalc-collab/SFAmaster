@@ -1,63 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Button Click</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
     <style>
-        body { 
-            font-family: Arial; 
-            text-align: center; 
-            padding-top: 100px;
-            background: #f0f2f5;
-        }
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .msg { font-size: 24px; color: green; margin: 20px 0; }
-        .coin { font-size: 48px; }
-        button {
-            padding: 15px 40px;
-            font-size: 18px;
-            background: #1a73e8;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+        body { font-family: Arial; text-align: center; padding-top: 50px; }
+        .msg { font-size: 24px; color: green; }
+        .error { font-size: 24px; color: red; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="content">
-            <h2>Click Karke 2 Coins Kamao</h2>
-            <button onclick="addCoins()">Claim 2 Coins</button>
-        </div>
+    <div id="message">
+        <h2>Ad page pe le ja rahe hain...</h2>
     </div>
 
     <script>
-        function addCoins() {
-            // Step 1: 2 Coins localStorage me add karo
-            let oldCoins = parseInt(localStorage.getItem('button_coins')) || 0;
-            let newCoins = oldCoins + 2;
-            localStorage.setItem('button_coins', newCoins);
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        const messageDiv = document.getElementById('message');
+
+        if (status === 'success') {
+            // Step 1: 2 Coin add karo localStorage me
+            let coins = parseInt(localStorage.getItem('button_coins')) || 0;
+            localStorage.setItem('button_coins', coins + 2);
             
-            // Step 2: Success message dikhao
-            document.getElementById('content').innerHTML = `
-                <div class="coin">🪙</div>
-                <h2 class="msg">✅ +2 Coins Mil Gaye!</h2>
-                <p>Total Coins: ${newCoins}</p>
-                <p>Index page pe le ja rahe hain...</p>
-            `;
+            // Step 2: User ko message dikhao
+            messageDiv.innerHTML = '<h2 class="msg">✅ Verify ho gaya! +2 Coins mile.</h2><p>Index page pe le ja rahe hain...</p>';
             
-            // Step 3: 2 second baad index.html pe redirect
+            // Step 3: 2 second baad index.html pe bhej do
             setTimeout(function() {
                 window.location.href = "https://srsmhospitalc-collab.github.io/SFAmaster/index.html";
             }, 2000);
+
+        } else if (status === 'failed') {
+            messageDiv.innerHTML = '<h2 class="error">❌ Verify nahi hua! Aap 22 second nahi ruke.</h2><button onclick="goToAd()">Dobara Try Karein</button>';
+        } else {
+            setTimeout(goToAd, 1000);
+        }
+
+        function goToAd() {
+            const returnUrl = "https://srsmhospitalc-collab.github.io/SFAmaster/button.html";
+            const startTime = Date.now();
+            // YAHAN AD PAGE KA URL DAAL - cycle use kar raha hun
+            window.location.href = "https://srsmhospitalc-collab.github.io/cycle/?return_url=" + encodeURIComponent(returnUrl) + "&time=22&start=" + startTime;
         }
     </script>
 </body>
