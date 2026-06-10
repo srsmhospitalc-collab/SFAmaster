@@ -20,7 +20,18 @@
         const messageDiv = document.getElementById('message');
 
         if (status === 'success') {
-            messageDiv.innerHTML = '<h2 class="msg">✅ Verify ho gaya! Aap 22 second cycle page pe ruke.</h2>';
+            // Step 1: 2 Coin add karo localStorage me
+            let coins = parseInt(localStorage.getItem('button4_coins')) || 0;
+            localStorage.setItem('button4_coins', coins + 2);
+            
+            // Step 2: User ko message dikhao
+            messageDiv.innerHTML = '<h2 class="msg">✅ Verify ho gaya! +2 Coins mile.</h2><p>Index page pe le ja rahe hain...</p>';
+            
+            // Step 3: 2 second baad index.html pe bhej do
+            setTimeout(function() {
+                window.location.href = "https://srsmhospitalc-collab.github.io/SFAmaster/index.html";
+            }, 2000);
+
         } else if (status === 'failed') {
             messageDiv.innerHTML = '<h2 class="error">❌ Verify nahi hua! Aap 22 second nahi ruke.</h2><button onclick="goToCycle()">Dobara Try Karein</button>';
         } else {
@@ -29,7 +40,7 @@
 
         function goToCycle() {
             const returnUrl = "https://srsmhospitalc-collab.github.io/SFAmaster/button4.html";
-            const startTime = Date.now(); 
+            const startTime = Date.now();
             window.location.href = "https://srsmhospitalc-collab.github.io/cycle/?return_url=" + encodeURIComponent(returnUrl) + "&time=22&start=" + startTime;
         }
     </script>
