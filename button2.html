@@ -1,41 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Loading...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your Link</title>
     <style>
-        body { font-family: Arial; text-align: center; padding-top: 50px; }
-        .msg { font-size: 24px; color: green; }
-        .error { font-size: 24px; color: red; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f3f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .box {
+            background: #ffffff;
+            padding: 35px 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 {
+            margin: 0 0 10px 0;
+            color: #212529;
+            font-size: 23px;
+        }
+        p {
+            color: #6c757d;
+            margin: 0 0 25px 0;
+            font-size: 15px;
+        }
+        .btn {
+            display: inline-block;
+            background: #e63946;
+            color: #fff;
+            padding: 16px 45px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        .btn:hover {
+            background: #d62839;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
-    <div id="message">
-        <h2>Computer page pe le ja rahe hain...</h2>
+    <div class="box">
+        <h2>Link Ready</h2>
+        <p>Click the button below to proceed</p>
+        <a href="https://plump-plastic.com/1sDozQ" target="_blank" class="btn">
+            Click Here
+        </a>
     </div>
-
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get('status');
-        const messageDiv = document.getElementById('message');
-
-        // Step 1: Check karo user wapas aaya hai ya naya aaya hai
-        if (status === 'success') {
-            // Agar 22 sec poore karke aaya hai
-            messageDiv.innerHTML = '<h2 class="msg">✅ Verify ho gaya! Aap 22 second ruke.</h2><p>Ab aap aage badh sakte hain.</p>';
-        } else if (status === 'failed') {
-            // Agar 22 sec se pehle wapas aa gaya
-            messageDiv.innerHTML = '<h2 class="error">❌ Verify nahi hua! Aap 22 second nahi ruke.</h2><p>Kripya dobara try karein.</p><button onclick="goToComputer()">Dobara Try Karein</button>';
-        } else {
-            // Naya user hai, to COMPUTER page pe bhejo
-            setTimeout(goToComputer, 1500);
-        }
-
-        function goToComputer() {
-            const returnUrl = "https://srsmhospitalc-collab.github.io/SFAmaster/button2.html";
-            const startTime = Date.now(); // Current time note kar lo
-            // startTime bhej rahe hain verify ke liye
-            window.location.href = "https://srsmhospitalc-collab.github.io/COMPUTER/?return_url=" + encodeURIComponent(returnUrl) + "&time=22&start=" + startTime;
-        }
-    </script>
 </body>
 </html>
