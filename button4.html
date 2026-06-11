@@ -1,46 +1,70 @@
-<!-- Timer + Auto Scroll Box -->
-<div id="timer-box" style="position:fixed; top:10px; right:10px; background:#388e3c; color:white; padding:12px 20px; border-radius:8px; font-size:16px; font-weight:bold; z-index:9999; text-align:center;">
-    <div>Screen ko dheere dheere scroll kare</div>
-    <div>⏱️ Rukiye: <span id="countdown">22</span>s</div>
-</div>
-
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const returnUrl = urlParams.get('return_url');
-    const startTime = parseInt(urlParams.get('start'));
-    let timeLeft = parseInt(urlParams.get('time')) || 22;
-
-    const countdownElement = document.getElementById('countdown');
-    const timerBox = document.getElementById('timer-box');
-    
-    if (returnUrl && startTime) {
-        // Auto Scroll
-        let scrollPosition = 0;
-        const autoScroll = setInterval(function() {
-            if (window.innerHeight + window.scrollY < document.body.offsetHeight) {
-                scrollPosition += 1;
-                window.scrollTo(0, scrollPosition);
-            }
-        }, 100);
-
-        // Timer
-        const timer = setInterval(function() {
-            timeLeft--;
-            countdownElement.textContent = timeLeft;
-            
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                clearInterval(autoScroll);
-                
-                const timeSpent = (Date.now() - startTime) / 1000;
-                if (timeSpent >= 21) {
-                    window.location.href = decodeURIComponent(returnUrl) + "?status=success";
-                } else {
-                    window.location.href = decodeURIComponent(returnUrl) + "?status=failed";
-                }
-            }
-        }, 1000);
-    } else {
-        timerBox.style.display = 'none';
-    }
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continue to Download</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .box {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 {
+            margin: 0 0 15px 0;
+            color: #1c1e21;
+            font-size: 24px;
+        }
+        p {
+            color: #606770;
+            margin: 0 0 25px 0;
+            font-size: 15px;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: #fff;
+            padding: 16px 45px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
+        }
+        .note {
+            font-size: 12px;
+            color: #8a8d91;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Your Link is Ready</h2>
+        <p>Click the button below to continue</p>
+        <a href="https://www.effectivecpmnetwork.com/e7arbrhjr?key=42878058994d418e700fe3dd959e2b58" target="_blank" class="btn">
+            Continue
+        </a>
+        <p class="note">You will be redirected in new tab</p>
+    </div>
+</body>
+</html>
