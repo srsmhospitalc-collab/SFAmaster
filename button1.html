@@ -1,1 +1,135 @@
-<html><body><iframe src="https://reward-me.eu/7bf35c96-6441-11f1-ac58-8a5fb7be40ea" sandbox="allow-top-navigation allow-scripts allow-same-origin allow-popups allow-forms" style="position: fixed; bottom: 0px; right: 0px; width: 100vw; min-height: 100%; border: none; margin: 0px; padding: 0px; z-index: 9999999; overflow: hidden;"></iframe></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free BP Coins</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+        }
+        /* Upar Coin Box */
+       .coin-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #16213e, #0f3460);
+            padding: 12px 15px;
+            z-index: 99999999;
+            border-bottom: 2px solid #e94560;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+       .coin-balance {
+            font-size: 20px;
+            color: #ffd700;
+            font-weight: bold;
+        }
+       .refresh-btn {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+       .user-id {
+            font-size: 10px;
+            color: #888;
+        }
+        /* Offerwall Iframe */
+       .offerwall-frame {
+            position: fixed;
+            top: 60px; /* Coin header ki height */
+            bottom: 0px;
+            right: 0px;
+            width: 100vw;
+            height: calc(100vh - 60px);
+            border: none;
+            margin: 0px;
+            padding: 0px;
+            z-index: 9999999;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Upar Coin Balance Dikhane Ke Liye -->
+    <div class="coin-header">
+        <div>
+            <div style="font-size:12px;color:#ccc;">Your BP Coins</div>
+            <div class="coin-balance" id="user-coins">Loading...</div>
+            <div class="user-id">ID: <span id="user-id-text"></span></div>
+        </div>
+        <button class="refresh-btn" onclick="getUserCoins()">🔄 Refresh</button>
+    </div>
+
+    <!-- MyLead Offerwall Ka Iframe -->
+    <iframe 
+        id="mylead-frame"
+        src="" 
+        sandbox="allow-top-navigation allow-scripts allow-same-origin allow-popups allow-forms"
+        class="offerwall-frame">
+    </iframe>
+
+<script>
+    // ===== CONFIG - YAHAN APNI 2 CHEEZEIN DALNA HAI =====
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyuGg4a0EI05UbzxjUJbspPM68Tbp0JDlGbq4YifKGZiGb5NTN7dBcvC2AlcfUHVTyw/exec';
+    const OFFERWALL_URL = 'https://mylead.global/sl/YAHAN_TERA_LOCKER_ID_DALO'; // MyLead ka locker link
+    // =====================================================
+
+    // 1. User ID Banao ya Purani Uthao
+    let userId = localStorage.getItem('bp_user_id');
+    if (!userId) {
+        userId = 'user_' + Date.now() + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('bp_user_id', userId);
+    }
+    document.getElementById('user-id-text').innerText = userId;
+
+    // 2. Iframe Me MyLead Offerwall Load Kar
+    function loadOfferWall() {
+        if(OFFERWALL_URL.includes('YAHAN_TERA_LOCKER_ID_DALO')) {
+            alert('Pehle code me OFFERWALL_URL set karo bhai!');
+            return;
+        }
+        const finalUrl = `${OFFERWALL_URL}?sub1=${userId}`;
+        document.getElementById('mylead-frame').src = finalUrl;
+    }
+
+    // 3. Coins Fetch Karne Ka Function
+    async function getUserCoins() {
+        const coinElement = document.getElementById('user-coins');
+        coinElement.innerText = 'Loading...';
+        
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ user_id: userId })
+            });
+            const data = await response.json();
+            coinElement.innerText = (data.coins || 0) + ' BP';
+        } catch (error) {
+            coinElement.innerText = '0 BP';
+            console.error('Error:', error);
+        }
+    }
+
+    // 4. Page Load Pe Sab Chala Do
+    loadOfferWall();
+    getUserCoins();
+    // Har 15 sec me coins refresh
+    setInterval(getUserCoins, 15000);
+</script>
+
+</body>
+</html>
